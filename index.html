@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, My Love</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="opening-overlay" id="openingOverlay">
+      <div class="overlay-text">Happy Birthday<br /><span>Dr Komal</span></div>
+      <div class="fireworks-layer" id="fireworksLayer"></div>
+      <div class="ribbon ribbon-left"></div>
+      <div class="ribbon ribbon-right"></div>
+    </div>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+    <div class="surprise-overlay" id="surpriseOverlay" aria-hidden="true">
+      <div class="surprise-card">
+        <div class="surprise-burst"></div>
+        <div class="sparkle-layer" id="sparkleLayer"></div>
+        <div class="surprise-cat">
+          <img
+            src="https://ae-pic-a1.aliexpress-media.com/kf/S6a18a6bb255f446693b4ad15643ccffaD.jpg"
+            alt="A cute cat with a birthday look"
+          />
+        </div>
+        <p class="surprise-title">Happy Birthday, Dr Komal</p>
+        <p class="surprise-subtitle">A tiny surprise just for you</p>
+      </div>
+    </div>
+
+    <audio id="birthdaySong" loop>
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button class="music-toggle" id="musicToggle" aria-label="Toggle birthday music">♫</button>
+
+    <main class="page-shell">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">A little birthday surprise</p>
+          <h1>Happy Birthday, Dr Komal</h1>
+          <p class="hero-text">
+            You make every ordinary moment feel magical. Today is all about your smile,
+            your laughter, and the love you bring into every life you touch.
+          </p>
+          <div class="hero-actions">
+            <a href="#cat-surprise" class="primary-btn" id="surpriseBtn">Open the surprise</a>
+            <span class="tiny-note">With love from your biggest admirer</span>
+          </div>
+          <div class="countdown-card" aria-label="Birthday countdown">
+            <p class="countdown-label">Birthday countdown</p>
+            <div class="countdown-grid">
+              <div class="time-block"><span id="days">00</span><small>Days</small></div>
+              <div class="time-block"><span id="hours">00</span><small>Hours</small></div>
+              <div class="time-block"><span id="minutes">00</span><small>Minutes</small></div>
+              <div class="time-block"><span id="seconds">00</span><small>Seconds</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="heart-core"></div>
+          <div class="spark spark-one"></div>
+          <div class="spark spark-two"></div>
+          <div class="spark spark-three"></div>
+        </div>
+      </section>
+
+      <section class="message-card">
+        <div class="message-content">
+          <p class="section-label">A sweet note</p>
+          <h2>You deserve the world and more</h2>
+          <p>
+            You are the kind of person who turns sadness into sunshine, chaos into laughter,
+            and ordinary days into memories worth keeping forever. I hope today feels as
+            special as you are.
+          </p>
+        </div>
+        <div class="message-badge">Forever cherished</div>
+      </section>
+
+      <section class="gallery-card" id="cat-surprise">
+        <div class="surprise-shell">
+          <p class="section-label">A tiny birthday surprise</p>
+          <h2>Press the button to reveal your surprise</h2>
+          <p>
+            The little cat animation will appear in the center with sparkles and confetti just for you.
+          </p>
+        </div>
+      </section>
+
+      <section class="closing-card">
+        <div class="cake-emoji" aria-hidden="true">🎂</div>
+        <p>May your day be full of roses, sparkle, and sweet surprises.</p>
+        <h3>Stay beautiful, stay you, and have the happiest birthday ever.</h3>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
