@@ -2,7 +2,6 @@ const overlay = document.getElementById('openingOverlay');
 const fireworksLayer = document.getElementById('fireworksLayer');
 const confettiLayer = document.getElementById('confettiLayer');
 const musicToggle = document.getElementById('musicToggle');
-const birthdaySong = document.getElementById('birthdaySong');
 const surpriseBtn = document.getElementById('surpriseBtn');
 const surpriseOverlay = document.getElementById('surpriseOverlay');
 const sparkleLayer = document.getElementById('sparkleLayer');
@@ -14,6 +13,10 @@ const moodBtn = document.getElementById('moodBtn');
 const moodOutput = document.getElementById('moodOutput');
 const cakeButton = document.getElementById('cakeButton');
 const cakeStatus = document.getElementById('cakeStatus');
+let birthdayAudioContext;
+let birthdayMasterGain;
+let melodyTimer;
+let melodyOscillators = [];
 
 const birthdayEnergies = [
   'Soft smiles, loud laughter, and a little extra sparkle.',
@@ -21,6 +24,53 @@ const birthdayEnergies = [
   'Golden sunlight, kind words, and your favorite people close by.',
   'A heart full of gratitude and a day worth remembering.'
 ];
+
+const birthdayMelody = [
+  [523.25, 0.55], [659.25, 0.55], [783.99, 0.7], [659.25, 0.55],
+  [587.33, 0.55], [698.46, 0.55], [880, 0.8], [698.46, 0.55],
+  [523.25, 0.55], [659.25, 0.55], [783.99, 0.7], [1046.5, 1]
+];
+
+function playMelody() {
+  let noteStart = birthdayAudioContext.currentTime + 0.05;
+  birthdayMelody.forEach(([frequency, duration]) => {
+    const oscillator = birthdayAudioContext.createOscillator();
+    const noteGain = birthdayAudioContext.createGain();
+    oscillator.type = 'sine';
+    oscillator.frequency.value = frequency;
+    noteGain.gain.setValueAtTime(0.001, noteStart);
+    noteGain.gain.linearRampToValueAtTime(0.12, noteStart + 0.06);
+    noteGain.gain.exponentialRampToValueAtTime(0.001, noteStart + duration);
+    oscillator.connect(noteGain);
+    noteGain.connect(birthdayMasterGain);
+    oscillator.start(noteStart);
+    oscillator.stop(noteStart + duration + 0.05);
+    melodyOscillators.push(oscillator);
+    noteStart += duration + 0.08;
+  });
+}
+
+function startBirthdayTone() {
+  birthdayAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+  birthdayMasterGain = birthdayAudioContext.createGain();
+  birthdayMasterGain.gain.value = 0.55;
+  birthdayMasterGain.connect(birthdayAudioContext.destination);
+  playMelody();
+  melodyTimer = setInterval(playMelody, 7200);
+}
+
+function stopBirthdayTone() {
+  clearInterval(melodyTimer);
+  melodyOscillators.forEach((oscillator) => {
+    try {
+      oscillator.stop();
+    } catch {
+    }
+  });
+  melodyOscillators = [];
+  birthdayAudioContext.close();
+  birthdayAudioContext = null;
+}
 
 function createFireworks() {
   const colors = ['#ff6ea8', '#ffd166', '#7b5cff', '#ffffff', '#ff9d9d'];
@@ -89,12 +139,14 @@ function celebrate() {
 }
 
 musicToggle.addEventListener('click', () => {
-  if (birthdaySong.paused) {
-    birthdaySong.play().catch(() => {});
+  if (!birthdayAudioContext) {
+    startBirthdayTone();
     musicToggle.textContent = '♪';
+    musicToggle.setAttribute('aria-label', 'Pause the birthday tone');
   } else {
-    birthdaySong.pause();
+    stopBirthdayTone();
     musicToggle.textContent = '♫';
+    musicToggle.setAttribute('aria-label', 'Play the birthday tone');
   }
 });
 
