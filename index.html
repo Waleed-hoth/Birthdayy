@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy Birthday, My Love</title>
+    <title>Happy Birthday</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,7 +14,11 @@
   </head>
   <body>
     <div class="opening-overlay" id="openingOverlay">
-      <div class="overlay-text">Happy Birthday<br /><span>Dr Komal</span></div>
+      <div class="overlay-text">
+        <span class="overlay-kicker">A little celebration for</span>
+        Happy Birthday<br /><span>Dr Komal</span>
+        <button class="skip-intro" id="skipIntro" type="button">Enter the celebration</button>
+      </div>
       <div class="fireworks-layer" id="fireworksLayer"></div>
       <div class="ribbon ribbon-left"></div>
       <div class="ribbon ribbon-right"></div>
@@ -31,12 +35,12 @@
         <div class="sparkle-layer" id="sparkleLayer"></div>
         <div class="surprise-cat">
           <img
-            src="https://ae-pic-a1.aliexpress-media.com/kf/S6a18a6bb255f446693b4ad15643ccffaD.jpg"
+            src="surprise-cat.webp"
             alt="A cute cat with a birthday look"
           />
         </div>
         <p class="surprise-title">Happy Birthday, Dr Komal</p>
-        <p class="surprise-subtitle">A tiny surprise just for you</p>
+        <p class="surprise-subtitle">Happy Birthday</p>
       </div>
     </div>
 
@@ -44,7 +48,10 @@
       <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
     </audio>
 
-    <button class="music-toggle" id="musicToggle" aria-label="Toggle birthday music">♫</button>
+    <div class="floating-controls">
+      <button class="icon-toggle" id="themeToggle" type="button" aria-label="Switch to the light theme">☼</button>
+      <button class="music-toggle" id="musicToggle" aria-label="Toggle birthday music">♫</button>
+    </div>
 
     <main class="page-shell">
       <section class="hero-card">
@@ -52,21 +59,18 @@
           <p class="eyebrow">A little birthday surprise</p>
           <h1>Happy Birthday, Dr Komal</h1>
           <p class="hero-text">
-            You make every ordinary moment feel magical. Today is all about your smile,
+            Happy Birthday to one of the most special people in my life, You make every ordinary moment feel magical. Today is all about your smile,
             your laughter, and the love you bring into every life you touch.
           </p>
           <div class="hero-actions">
-            <a href="#cat-surprise" class="primary-btn" id="surpriseBtn">Open the surprise</a>
-            <span class="tiny-note">With love from your biggest admirer</span>
+            <a href="#" class="primary-btn" id="surpriseBtn">Click Here</a>
           </div>
-          <div class="countdown-card" aria-label="Birthday countdown">
-            <p class="countdown-label">Birthday countdown</p>
-            <div class="countdown-grid">
-              <div class="time-block"><span id="days">00</span><small>Days</small></div>
-              <div class="time-block"><span id="hours">00</span><small>Hours</small></div>
-              <div class="time-block"><span id="minutes">00</span><small>Minutes</small></div>
-              <div class="time-block"><span id="seconds">00</span><small>Seconds</small></div>
+          <div class="mood-card" aria-live="polite">
+            <div>
+              <p class="mood-label">Today's birthday energy</p>
+              <p class="mood-output" id="moodOutput">Soft smiles, loud laughter, and a little extra sparkle.</p>
             </div>
+            <button class="mood-btn" id="moodBtn" type="button" aria-label="Show another birthday energy">Refresh <span aria-hidden="true">✦</span></button>
           </div>
         </div>
 
@@ -83,28 +87,28 @@
           <p class="section-label">A sweet note</p>
           <h2>You deserve the world and more</h2>
           <p>
-            You are the kind of person who turns sadness into sunshine, chaos into laughter,
-            and ordinary days into memories worth keeping forever. I hope today feels as
-            special as you are.
+        I honestly don’t know how to put into words how much you mean to me.
+         You’ve become such an important part of my life, and I’m incredibly grateful for every conversation, every laugh, every memory, and every little moment we’ve shared. You have such a beautiful heart, and I hope you always remember how special you are..
           </p>
         </div>
         <div class="message-badge">Forever cherished</div>
       </section>
 
-      <section class="gallery-card" id="cat-surprise">
-        <div class="surprise-shell">
-          <p class="section-label">A tiny birthday surprise</p>
-          <h2>Press the button to reveal your surprise</h2>
-          <p>
-            The little cat animation will appear in the center with sparkles and confetti just for you.
-          </p>
-        </div>
-      </section>
-
       <section class="closing-card">
-        <div class="cake-emoji" aria-hidden="true">🎂</div>
+        <button class="cake-button" id="cakeButton" type="button" aria-label="Blow out the birthday candles">
+          <span class="cake-candles" aria-hidden="true">
+            <span class="candle candle-one"><i></i></span>
+            <span class="candle candle-two"><i></i></span>
+            <span class="candle candle-three"><i></i></span>
+          </span>
+          <span class="cake-top" aria-hidden="true"></span>
+          <span class="cake-body" aria-hidden="true"></span>
+        </button>
+        <p class="cake-status" id="cakeStatus" role="status" aria-live="polite">Tap the cake to make a wish</p>
         <p>May your day be full of roses, sparkle, and sweet surprises.</p>
         <h3>Stay beautiful, stay you, and have the happiest birthday ever.</h3>
+        <button class="outline-btn" id="shareBtn" type="button">Copy a birthday message</button>
+        <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
       </section>
     </main>
 

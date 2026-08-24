@@ -1,7 +1,3 @@
-const dayEl = document.getElementById('days');
-const hourEl = document.getElementById('hours');
-const minuteEl = document.getElementById('minutes');
-const secondEl = document.getElementById('seconds');
 const overlay = document.getElementById('openingOverlay');
 const fireworksLayer = document.getElementById('fireworksLayer');
 const confettiLayer = document.getElementById('confettiLayer');
@@ -10,6 +6,21 @@ const birthdaySong = document.getElementById('birthdaySong');
 const surpriseBtn = document.getElementById('surpriseBtn');
 const surpriseOverlay = document.getElementById('surpriseOverlay');
 const sparkleLayer = document.getElementById('sparkleLayer');
+const skipIntro = document.getElementById('skipIntro');
+const themeToggle = document.getElementById('themeToggle');
+const shareBtn = document.getElementById('shareBtn');
+const copyStatus = document.getElementById('copyStatus');
+const moodBtn = document.getElementById('moodBtn');
+const moodOutput = document.getElementById('moodOutput');
+const cakeButton = document.getElementById('cakeButton');
+const cakeStatus = document.getElementById('cakeStatus');
+
+const birthdayEnergies = [
+  'Soft smiles, loud laughter, and a little extra sparkle.',
+  'Main-character energy with a side of delicious cake.',
+  'Golden sunlight, kind words, and your favorite people close by.',
+  'A heart full of gratitude and a day worth remembering.'
+];
 
 function createFireworks() {
   const colors = ['#ff6ea8', '#ffd166', '#7b5cff', '#ffffff', '#ff9d9d'];
@@ -71,6 +82,12 @@ function showSurprise() {
   }, 2600);
 }
 
+function celebrate() {
+  createConfetti();
+  createFireworks();
+  showSurprise();
+}
+
 musicToggle.addEventListener('click', () => {
   if (birthdaySong.paused) {
     birthdaySong.play().catch(() => {});
@@ -81,47 +98,52 @@ musicToggle.addEventListener('click', () => {
   }
 });
 
-function getNextBirthday() {
-  const today = new Date();
-  const target = new Date(today.getFullYear(), 6, 5);
-  if (target < today) {
-    target.setFullYear(target.getFullYear() + 1);
-  }
-  return target;
-}
-
-function updateCountdown() {
-  const target = getNextBirthday();
-  const diff = target - new Date();
-
-  if (diff <= 0) {
-    dayEl.textContent = '00';
-    hourEl.textContent = '00';
-    minuteEl.textContent = '00';
-    secondEl.textContent = '00';
-    return;
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-
-  dayEl.textContent = String(days).padStart(2, '0');
-  hourEl.textContent = String(hours).padStart(2, '0');
-  minuteEl.textContent = String(minutes).padStart(2, '0');
-  secondEl.textContent = String(seconds).padStart(2, '0');
-}
-
 surpriseBtn.addEventListener('click', (event) => {
   event.preventDefault();
-  showSurprise();
+  celebrate();
 });
 
-updateCountdown();
+skipIntro.addEventListener('click', removeOverlay);
+
+themeToggle.addEventListener('click', () => {
+  const isLight = document.body.classList.toggle('light-theme');
+  themeToggle.textContent = isLight ? '☾' : '☼';
+  themeToggle.setAttribute('aria-label', isLight ? 'Switch to the dark theme' : 'Switch to the light theme');
+});
+
+shareBtn.addEventListener('click', async () => {
+  const message = 'Happy Birthday, Dr Komal! May your day be full of roses, sparkle, and sweet surprises.';
+  try {
+    await navigator.clipboard.writeText(message);
+    copyStatus.textContent = 'Birthday message copied.';
+  } catch {
+    copyStatus.textContent = message;
+  }
+  setTimeout(() => {
+    copyStatus.textContent = '';
+  }, 3200);
+});
+
+moodBtn.addEventListener('click', () => {
+  const currentMood = birthdayEnergies.indexOf(moodOutput.textContent);
+  const nextMood = birthdayEnergies[(currentMood + 1) % birthdayEnergies.length];
+  moodOutput.classList.remove('mood-refresh');
+  void moodOutput.offsetWidth;
+  moodOutput.textContent = nextMood;
+  moodOutput.classList.add('mood-refresh');
+});
+
+cakeButton.addEventListener('click', () => {
+  const candlesOut = cakeButton.classList.toggle('candles-out');
+  cakeButton.setAttribute('aria-label', candlesOut ? 'Relight the birthday candles' : 'Blow out the birthday candles');
+  cakeStatus.textContent = candlesOut ? 'Wish made! May it come true.' : 'Tap the cake to make a wish';
+  if (candlesOut) {
+    createConfetti();
+  }
+});
+
 createFireworks();
 createConfetti();
 setTimeout(removeOverlay, 3600);
-setInterval(updateCountdown, 1000);
 setInterval(createFireworks, 4000);
 setInterval(createConfetti, 2800);
